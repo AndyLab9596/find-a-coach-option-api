@@ -1,0 +1,3 @@
+<template>
+    Coaches List
+</template>
