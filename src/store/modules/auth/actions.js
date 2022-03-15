@@ -24,7 +24,6 @@ export default {
         } else {
             url = config.SIGN_UP_URL
         }
-        console.log('url', url);
 
         const response = await fetch(url, {
             method: 'POST',
@@ -98,7 +97,7 @@ export default {
         })
     },
 
-    autoLogout (context) {
+    autoLogout(context) {
         context.dispatch('logout');
         context.commit('setAutoLogout')
     }

@@ -1,5 +1,11 @@
 <template>
   <div>
+    <base-dialog :show="!!error" title="An error occurred" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <base-dialog :show="!!isLoading" title="Authenticating..." fixed>
+      <base-spinner></base-spinner>
+    </base-dialog>
     <base-card>
       <form @submit.prevent="submitForm">
         <div class="form-control">
@@ -85,6 +91,10 @@ export default {
           error.message || "Failed to authenticate, Check your login data";
       }
       this.isLoading = false;
+    },
+
+    handleError() {
+      this.error = null;
     },
   },
 };
