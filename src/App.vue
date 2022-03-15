@@ -9,6 +9,21 @@ export default {
   components: {
     TheHeader,
   },
+  created() {
+    this.$store.dispatch("tryLogin");
+  },
+  computed: {
+    didAutoLogout() {
+      return this.$store.getters.didAutoLogout;
+    },
+  },
+  watch: {
+    didAutoLogout(currValue, newValue) {
+      if (currValue && currValue !== newValue) {
+        this.$router.replace("/coaches");
+      }
+    },
+  },
 };
 </script>
 

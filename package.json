@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "dotenv-webpack": "^7.1.0",
     "vue": "^3.2.13",
     "vue-router": "4",
     "vuex": "^4.0.2"

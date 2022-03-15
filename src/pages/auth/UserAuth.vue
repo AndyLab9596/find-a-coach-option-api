@@ -29,7 +29,7 @@ export default {
     return {
       email: "",
       password: "",
-      isFormValid: false,
+      isFormValid: true,
       error: null,
       isLoading: false,
       mode: "login",
@@ -59,7 +59,7 @@ export default {
         this.mode = "login";
       }
     },
-    submitForm() {
+    async submitForm() {
       this.isFormValid = true;
       if (
         !this.email.includes("@") ||
@@ -74,7 +74,17 @@ export default {
         email: this.email,
         password: this.password,
       };
-      console.log("actionPayload", actionPayload);
+
+      try {
+        await this.$store.dispatch(this.mode, actionPayload);
+        // navigate to other page
+        const redirectUrl = "/" + (this.$route.query.redirect || "coaches");
+        this.$router.replace(redirectUrl);
+      } catch (error) {
+        this.error =
+          error.message || "Failed to authenticate, Check your login data";
+      }
+      this.isLoading = false;
     },
   },
 };
