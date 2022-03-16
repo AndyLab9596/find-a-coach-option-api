@@ -1,0 +1,11 @@
+export default {
+    coaches(state) {
+        return state.coaches
+    },
+    shouldUpdate(state) {
+        const lastFetch = state.lastFetch;
+        if (!lastFetch) {
+            return true
+        }
+    }
+}

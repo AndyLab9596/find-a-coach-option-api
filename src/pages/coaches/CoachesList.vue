@@ -19,17 +19,26 @@
         <div v-if="isLoading">
           <base-spinner></base-spinner>
         </div>
-        <ul></ul>
+        <ul>
+          <coach-item
+            v-for="coach in filteredCoaches"
+            :key="coach.id"
+            :lastName="coach.lastName"
+            :firstName="coach.firstName"
+            :areas="coach.area"
+            :rate="coach.hourlyRate"
+          ></coach-item>
+        </ul>
       </base-card>
     </section>
   </div>
 </template>
 
 <script>
-// import CoachItem from "../../components/coaches/CoachItem.vue";
+import CoachItem from "../../components/coaches/CoachItem.vue";
 export default {
   components: {
-    // CoachItem,
+    CoachItem,
   },
   data() {
     return {
@@ -37,9 +46,28 @@ export default {
       isLoading: false,
     };
   },
+  created() {
+    this.loadCoaches();
+  },
+  computed: {
+    filteredCoaches() {
+      return this.$store.getters["coaches/coaches"];
+    },
+  },
   methods: {
     handleError() {
       this.error = null;
+    },
+    async loadCoaches(refresh = false) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("coaches/loadCoaches", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+      }
+      this.isLoading = false;
     },
   },
 };
@@ -49,5 +77,11 @@ export default {
 .controls {
   display: flex;
   justify-content: space-between;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 </style>
