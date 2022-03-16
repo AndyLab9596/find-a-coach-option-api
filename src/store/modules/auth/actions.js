@@ -48,7 +48,6 @@ export default {
         localStorage.setItem('userId', responseData.localId);
         localStorage.setItem('tokenExpiration', expirationDate);
 
-        console.log('responseData', responseData)
         timer = setTimeout(() => {
             // Dispatch auto logout
             context.dispatch('autoLogout')
